@@ -20,7 +20,7 @@ const Home = () => {
             <button className='btn'><img src={play_icon} alt="" />Play</button>
             <button className='btn dark-btn'><img src={info_icon} alt="" />More info</button>
           </div>
-          <TitleCards/>
+          <TitleCards></TitleCards>
         </div>
       </div>
     </div>

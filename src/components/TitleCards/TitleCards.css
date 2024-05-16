@@ -1,29 +1,69 @@
 .titlecards {
     margin-top: 50px;
     margin-bottom: 30px;
+    position: relative;
 }
+
 .titlecards h2 {
     margin-bottom: 8px;
+    margin-left: 6%;
 }
+
+.card-list-wrapper {
+    position: relative;
+    margin-left: 6%;
+}
+
 .card-list {
     display: flex;
     gap: 10px;
     overflow-x: scroll;
     position: relative;
+    scroll-behavior: smooth;
 }
+
 .card-list::-webkit-scrollbar {
     display: none;
 }
+
 .card-list img {
-    width: 240px;
+    width: 260px;
     border-radius: 4px;
     cursor: pointer;
 }
+
 .card {
     position: relative;
 }
+
 .card p {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+.scroll-button-right,
+.scroll-button-left {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.scroll-button-right {
+    right: 10px;  /* Adjust as needed for spacing */
+}
+
+.scroll-button-left {
+    left: 10px;  /* Adjust as needed for spacing */
+    transform: translateY(-50%) rotate(180deg);
+    display: none;
+}
+
+.more-cards {
+    height: 40px;
+    width: 40px;
 }
