@@ -3,7 +3,7 @@ import './TitleCards.css';
 import cards_data from '../../assets/cards/Cards_data';
 import play_icon from '../../assets/play_icon.png';
 
-const TitleCards = () => {
+const TitleCards = ({title, category}) => {
   const cardListRef = useRef(null);
   const leftButtonRef = useRef(null);
   const titleCardsRef = useRef(null);
@@ -23,10 +23,10 @@ const TitleCards = () => {
 
   return (
     <div className='titlecards' >
-      <h2>Popular on Netflix</h2>
+      <h2>{title?title:"Popular on Netflix"}</h2>
       <div className="card-list-wrapper" ref={titleCardsRef}>
         <button onClick={scrollLeft} className='scroll-button-left' ref={leftButtonRef}>
-          <img src={play_icon} className='more-cards' alt="Scroll" />
+          <img src={play_icon} className='more-cards-icon' alt="Scroll" />
         </button>
         <div className="card-list" ref={cardListRef}>
           {cards_data.map((card, index) => {
@@ -39,7 +39,7 @@ const TitleCards = () => {
           })}
         </div>
         <button onClick={scrollRight} className='scroll-button-right'>
-          <img src={play_icon} className='more-cards' alt="Scroll" />
+          <img src={play_icon} className='more-cards-icon' alt="Scroll" />
         </button>
       </div>
     </div>

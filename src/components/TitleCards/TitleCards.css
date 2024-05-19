@@ -6,12 +6,12 @@
 
 .titlecards h2 {
     margin-bottom: 8px;
-    margin-left: 6%;
+    margin-left: 3%;
 }
 
 .card-list-wrapper {
     position: relative;
-    margin-left: 6%;
+    margin-left: 3%;
 }
 
 .card-list {
@@ -63,7 +63,7 @@
     display: none;
 }
 
-.more-cards {
+.more-cards-icon {
     height: 40px;
     width: 40px;
 }
