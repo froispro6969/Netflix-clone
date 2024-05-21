@@ -1,10 +1,58 @@
 import React, { useState } from 'react'
 import './Login.css'
 import logo from '../../assets/logo.png'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { auth, db } from '../../firebase';
+import { addDoc, collection } from 'firebase/firestore';
 
 const Login = () => {
 
   const [signState, setSignState] = useState("Sign In");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const user_auth = async (e) => {
+    e.preventDefault();
+    if(signState === "Sign In") {
+      await login(email, password)
+    } else {
+      await signUp(name, email, password)
+    }
+  }
+
+  const signUp = async (name, email, password) => {
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const user = res.user
+      await addDoc(collection(db, "user"), {
+        uid: user.uid,
+        name,
+        authProvider: "local",
+        email,
+      })
+    } catch(error)
+    {
+      console.log(error)
+      alert(error)
+    }
+  }
+
+  const login = async (email, password) => {
+    try{
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error)
+    {
+      console.log(error)
+      alert(error)
+    }
+  }
+
+  const logout = () => {
+    signOut(auth);
+  }
+
 
   return (
     <div className='login'>
@@ -13,12 +61,12 @@ const Login = () => {
           <h1>{signState}</h1>
           <form>
             {signState === "Sign Up" ? 
-            <input type="text" placeholder='Your name' />
+            <input type="text" placeholder='Your name' value={name} onChange={(e) => {setName(e.target.value)}}/>
             :
             <></>}
-            <input type="email" placeholder='Email' />
-            <input type="password" placeholder='Password' />
-            <button>{signState}</button>
+            <input type="email" placeholder='Email'  value={email} onChange={(e) => {setEmail(e.target.value)}}/>
+            <input type="password" placeholder='Password' value={password}  onChange={(e) => {setPassword(e.target.value)}}/>
+            <button onClick={user_auth} type='submit'>{signState}</button>
             <div className="form-help">
               <div className="remember">
                 <input type="checkbox" />
