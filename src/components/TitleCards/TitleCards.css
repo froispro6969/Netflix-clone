@@ -1,10 +1,10 @@
-.titlecards {
+.title-cards {
     margin-top: 50px;
     margin-bottom: 30px;
     position: relative;
 }
 
-.titlecards h2 {
+.title-cards h2 {
     margin-bottom: 8px;
     margin-left: 3%;
 }
@@ -56,11 +56,11 @@
 }
 
 .scroll-button-right {
-    right: 10px;  /* Adjust as needed for spacing */
+    right: 10px;  
 }
 
 .scroll-button-left {
-    left: 10px;  /* Adjust as needed for spacing */
+    left: 10px;  
     transform: translateY(-50%) rotate(180deg);
     display: none;
 }
@@ -69,3 +69,31 @@
     height: 40px;
     width: 40px;
 }
+
+@media (max-width: 768px) {
+    .title-cards {
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+    .title-cards h2 {
+        font-size: 20px;
+    }
+    .card-list img {
+        width: 200px;
+    }
+    .card-list p {
+        font-size: 12px;
+    }
+}  
+
+@media (max-width: 576px) {
+    .title-cards h2 {
+        font-size: 15px;
+    }
+    .card-list img {
+        width: 165px;
+    }
+    .card-list p {
+        font-size: 10px;
+    }
+}  

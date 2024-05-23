@@ -38,7 +38,7 @@ const TitleCards = ({ title, category }) => {
   },[])
 
   return (
-    <div className='titlecards' >
+    <div className='title-cards' >
       <h2>{title ? title : "Popular on Netflix"}</h2>
       <div className="card-list-wrapper" ref={titleCardsRef}>
         <button onClick={scrollLeft} className='scroll-button-left' ref={leftButtonRef}>
