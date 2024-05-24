@@ -31,11 +31,11 @@ const TitleCards = ({ title, category }) => {
   };
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${category?category:"now_playing"}?language=en-US&page=1`, options)
-    .then(response => response.json())
-    .then(response => setApiData(response.results))
-    .catch(err => console.error(err));
-  },[])
+    fetch(`https://api.themoviedb.org/3/movie/${category ? category : "now_playing"}?language=en-US&page=1`, options)
+      .then(response => response.json())
+      .then(response => setApiData(response.results))
+      .catch(err => console.error(err));
+  }, [])
 
   return (
     <div className='title-cards' >
@@ -48,11 +48,17 @@ const TitleCards = ({ title, category }) => {
           {apiData.map((card, index) => {
             return (
               <Link to={`/player/${card.id}`} className="card" key={index}>
-                <img src={`https://image.tmdb.org/t/p/w500`+card.backdrop_path} alt={card.name} />
-                <p>{card.original_title}</p>
+                <img src={`https://image.tmdb.org/t/p/w500` + card.backdrop_path} alt={card.name} />
+                <div className="card-overlay">
+                  <h3>{card.original_title}</h3>
+                  <p>Rating: {card.vote_average}</p>
+                  <p>Release Date: {card.release_date}</p>
+                  <p>{card.overview}</p>
+                </div>
               </Link>
             );
           })}
+
         </div>
         <button onClick={scrollRight} className='scroll-button-right'>
           <img src={play_icon} className='more-cards-icon' alt="Scroll" />

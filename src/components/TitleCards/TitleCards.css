@@ -27,7 +27,6 @@
 }
 
 .card-list img {
-    width: 260px;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -43,6 +42,11 @@
     text-decoration: none;
     color: white;
 }
+
+.card img {
+    width: 260px;
+}
+
 
 .scroll-button-right,
 .scroll-button-left {
@@ -69,6 +73,35 @@
     height: 40px;
     width: 40px;
 }
+
+.card-overlay {
+    display: none;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0px;
+    transition: transform 450ms;
+    transition-delay: 0.2s;
+}
+
+.card-list:focus-within .card,
+.card-list:hover .card {
+  transform: translateX(-25%);
+}
+
+.card:focus ~ .card,
+.card:hover ~ .card {
+  transform: translateX(25%);
+}
+
+.card-list .card:focus,
+.card-list .card:hover {
+  transform: scale(1.5);
+  z-index: 1;
+}
+
 
 @media (max-width: 768px) {
     .title-cards {
