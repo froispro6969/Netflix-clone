@@ -35,18 +35,29 @@
     position: relative;
 }
 
-.card p {
+.card-overlay {
+    display: none;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    text-decoration: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .card-overlay {
+    display: block;
+    opacity: 1;
 }
 
 .card img {
     width: 260px;
 }
-
 
 .scroll-button-right,
 .scroll-button-left {
@@ -60,11 +71,11 @@
 }
 
 .scroll-button-right {
-    right: 10px;  
+    right: 10px;
 }
 
 .scroll-button-left {
-    left: 10px;  
+    left: 10px;
     transform: translateY(-50%) rotate(180deg);
     display: none;
 }
@@ -74,33 +85,6 @@
     width: 40px;
 }
 
-.card-overlay {
-    display: none;
-}
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 0px;
-    transition: transform 450ms;
-    transition-delay: 0.2s;
-}
-
-.card-list:focus-within .card,
-.card-list:hover .card {
-  transform: translateX(-25%);
-}
-
-.card:focus ~ .card,
-.card:hover ~ .card {
-  transform: translateX(25%);
-}
-
-.card-list .card:focus,
-.card-list .card:hover {
-  transform: scale(1.5);
-  z-index: 1;
-}
 
 
 @media (max-width: 768px) {
@@ -117,7 +101,10 @@
     .card-list p {
         font-size: 12px;
     }
-}  
+    .card-overlay {
+        font-size: 12px;
+    }
+}
 
 @media (max-width: 576px) {
     .title-cards h2 {
@@ -129,4 +116,7 @@
     .card-list p {
         font-size: 10px;
     }
-}  
+    .card-overlay {
+        font-size: 10px;
+    }
+}

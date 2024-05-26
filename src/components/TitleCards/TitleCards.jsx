@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './TitleCards.css';
 import play_icon from '../../assets/play_icon.png';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const TitleCards = ({ title, category }) => {
   const cardListRef = useRef(null);
@@ -35,7 +35,7 @@ const TitleCards = ({ title, category }) => {
       .then(response => response.json())
       .then(response => setApiData(response.results))
       .catch(err => console.error(err));
-  }, [])
+  }, [category]);
 
   return (
     <div className='title-cards' >
@@ -45,20 +45,17 @@ const TitleCards = ({ title, category }) => {
           <img src={play_icon} className='more-cards-icon' alt="Scroll" />
         </button>
         <div className="card-list" ref={cardListRef}>
-          {apiData.map((card, index) => {
-            return (
-              <Link to={`/player/${card.id}`} className="card" key={index}>
-                <img src={`https://image.tmdb.org/t/p/w500` + card.backdrop_path} alt={card.name} />
-                <div className="card-overlay">
-                  <h3>{card.original_title}</h3>
-                  <p>Rating: {card.vote_average}</p>
-                  <p>Release Date: {card.release_date}</p>
-                  <p>{card.overview}</p>
-                </div>
-              </Link>
-            );
-          })}
-
+          {apiData.map((card, index) => (
+            <Link to={`/player/${card.id}`} className="card" key={index}>
+              <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
+              <div className="card-overlay">
+                <h3>{card.original_title}</h3>
+                <p>Rating: {card.vote_average}</p>
+                <p>Release Date: {card.release_date}</p>
+                
+              </div>
+            </Link>
+          ))}
         </div>
         <button onClick={scrollRight} className='scroll-button-right'>
           <img src={play_icon} className='more-cards-icon' alt="Scroll" />
