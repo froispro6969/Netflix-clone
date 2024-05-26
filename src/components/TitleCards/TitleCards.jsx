@@ -8,6 +8,7 @@ const TitleCards = ({ title, category }) => {
   const leftButtonRef = useRef(null);
   const titleCardsRef = useRef(null);
   const [apiData, setApiData] = useState([]);
+  const [cardsPerPage, setCardsPerPage] = useState(0);
 
   const options = {
     method: 'GET',
@@ -17,16 +18,31 @@ const TitleCards = ({ title, category }) => {
     }
   };
 
-  const scrollRight = () => {
+  const calculateCardsPerPage = () => {
     if (cardListRef.current) {
-      cardListRef.current.scrollBy({ left: 1500, behavior: 'smooth' });
+      const card = cardListRef.current.querySelector('.card');
+      if (card) {
+        const cardWidth = card.offsetWidth;
+        const visibleCards = Math.floor(window.innerWidth / cardWidth);
+        setCardsPerPage(visibleCards);
+      }
     }
-    leftButtonRef.current.style.display = 'block';
-    titleCardsRef.current.style.marginLeft = 0;
   };
+
+  const scrollRight = () => {
+    if (cardListRef.current && cardsPerPage > 0) {
+      const cardWidth = cardListRef.current.querySelector('.card').offsetWidth;
+      cardListRef.current.scrollBy({ left: cardWidth * cardsPerPage, behavior: 'smooth' });
+    }
+    if (leftButtonRef.current) {
+      leftButtonRef.current.style.display = 'block';
+    }
+  };
+
   const scrollLeft = () => {
-    if (cardListRef.current) {
-      cardListRef.current.scrollBy({ left: -1500, behavior: 'smooth' });
+    if (cardListRef.current && cardsPerPage > 0) {
+      const cardWidth = cardListRef.current.querySelector('.card').offsetWidth;
+      cardListRef.current.scrollBy({ left: -cardWidth * cardsPerPage, behavior: 'smooth' });
     }
   };
 
@@ -37,8 +53,17 @@ const TitleCards = ({ title, category }) => {
       .catch(err => console.error(err));
   }, [category]);
 
+  useEffect(() => {
+    calculateCardsPerPage();
+    window.addEventListener('resize', calculateCardsPerPage);
+
+    return () => {
+      window.removeEventListener('resize', calculateCardsPerPage);
+    };
+  }, [apiData]);
+
   return (
-    <div className='title-cards' >
+    <div className='title-cards'>
       <h2>{title ? title : "Popular on Netflix"}</h2>
       <div className="card-list-wrapper" ref={titleCardsRef}>
         <button onClick={scrollLeft} className='scroll-button-left' ref={leftButtonRef}>
@@ -52,7 +77,6 @@ const TitleCards = ({ title, category }) => {
                 <h3>{card.original_title}</h3>
                 <p>Rating: {card.vote_average}</p>
                 <p>Release Date: {card.release_date}</p>
-                
               </div>
             </Link>
           ))}
