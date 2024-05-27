@@ -3,6 +3,7 @@ import './Login.css'
 import logo from '../../assets/logo.png'
 import { login, signUp, logout } from './Login.js';
 import netflix_spinner from '../../assets/netflix_spinner.gif'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -11,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const user_auth = async (e) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ const Login = () => {
     } else {
       await signUp(name, email, password)
     }
+    navigate("/")
     setLoading(false);
   }
 

@@ -4,6 +4,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
 export const signUp = async (name, email, password) => {
+
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user

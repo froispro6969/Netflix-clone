@@ -6,11 +6,13 @@ import bell_icon from '../../assets/bell_icon.svg'
 import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
 import { logout } from '../../pages/Login/Login'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
 
   const navRef = useRef();
   const  [IsVisible, SetIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -50,7 +52,7 @@ const Navbar = () => {
           <img src={profile_img} alt="" className='profile' />
           <img src={caret_icon} alt="" />
           <div className="dropdown">
-            <p onClick={logout}>Sign Out of Netflix</p>
+            <p onClick={() => {logout();navigate("/login")}}>Sign Out of Netflix</p>
           </div>
         </div>
       </div>
