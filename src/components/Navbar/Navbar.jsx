@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './Navbar.css'
 import logo from '../../assets/logo.png'
 import search_icon from '../../assets/search_icon.svg'
@@ -7,12 +7,15 @@ import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
 import { logout } from '../../pages/Login/Login'
 import { useNavigate } from 'react-router-dom'
+import { SearchContext } from '../../context/SearchContext.jsx';
 
 const Navbar = () => {
 
   const navRef = useRef();
   const  [IsVisible, SetIsVisible] = useState(false);
+  const { query, setQuery } = useContext(SearchContext);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -41,7 +44,7 @@ const Navbar = () => {
       <div className="navbar-right">
         {IsVisible ?
           <div className="search-box">
-            <input type="text" placeholder='Title of Movie'/>
+            <input type="text" placeholder='Title of Movie' onChange={(e) => {setQuery(e.target.value)}}/>
             <a className='close-input' onClick={() => {SetIsVisible(false)}}>X</a>
           </div>
           :

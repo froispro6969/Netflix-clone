@@ -3,9 +3,11 @@ import Navbar from '../../components/Navbar/Navbar'
 
 const Search = () => {
     return (
-        <div>
-            <Navbar />
-            YOLO
+        <div className='search'>
+            <Navbar/>
+            <div className="movie-list">
+                DD
+            </div>
         </div>
     )
 }
