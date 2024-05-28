@@ -55,6 +55,15 @@
     background-color: #6d6d6e66;
 }
 
+.searched-movies {
+    padding: 100px 6% 0 6%;
+}
+
+.searched-movie-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .hero-caption {
