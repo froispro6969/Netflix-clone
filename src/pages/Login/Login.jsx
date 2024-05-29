@@ -1,49 +1,50 @@
 import React, { useState } from 'react'
 import './Login.css'
 import logo from '../../assets/logo.png'
-import { login, signUp, logout } from './Login.js';
 import netflix_spinner from '../../assets/netflix_spinner.gif'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const Login = () => {
 
-  const [signState, setSignState] = useState("Sign In");
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const user_auth = async (e) => {
-    e.preventDefault();
+  
+  const signIn = async (email, password) => {
     setLoading(true);
-    if(signState === "Sign In") {
-      await login(email, password)
-    } else {
-      await signUp(name, email, password)
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      const errorMessage = error.code
+        ? error.code.split('/')[1].split("-").join(" ")
+        : 'An unexpected error occurred';
+      toast.error(errorMessage);
     }
-    navigate("/")
     setLoading(false);
-  }
+  };
+
 
   
   return (
     loading ?
     <div className="login-spinner">
       <img src={netflix_spinner} alt="" />
-    </div>:
+    </div>
+    :
     <div className='login'>
         <img src={logo} className='login-logo' alt="" />
         <div className="login-form">
-          <h1>{signState}</h1>
-          <form>
-            {signState === "Sign Up" ? 
-            <input type="text" placeholder='Your name' value={name} onChange={(e) => {setName(e.target.value)}}/>
-            :
-            <></>}
+          <h1>Sign in</h1>
             <input type="email" placeholder='Email'  value={email} onChange={(e) => {setEmail(e.target.value)}}/>
             <input type="password" placeholder='Password' value={password}  onChange={(e) => {setPassword(e.target.value)}}/>
-            <button onClick={user_auth} type='submit'>{signState}</button>
+            <button onClick={() => {signIn(email,password)}} type='submit'>Sign In</button>
             <div className="form-help">
               <div className="remember">
                 <input type="checkbox" />
@@ -51,12 +52,8 @@ const Login = () => {
               </div>
               <p>Need Help?</p>
             </div>
-          </form>
           <div className="form-switch">
-            {signState === "Sign In" ?
-            <p>New to Netflix? <span onClick={() => setSignState("Sign Up")}>Sign Up Now</span></p>
-            :
-            <p>Already have account? <span onClick={() => setSignState("Sign In")}>Sign In Now</span></p>}
+            <p>New to Netflix? <span onClick={() => navigate("/register")}>Sign Up Now</span></p>
           </div>
         </div>
     </div>
