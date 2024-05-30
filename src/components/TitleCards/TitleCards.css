@@ -85,6 +85,13 @@
     width: 40px;
 }
 
+.add-mylist {
+    position: absolute;
+    right: 0;
+    top: -25px;
+    z-index: 2;
+}
+
 
 
 @media (max-width: 768px) {

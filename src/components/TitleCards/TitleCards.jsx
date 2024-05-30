@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './TitleCards.css';
 import play_icon from '../../assets/play_icon.png';
-import { Link } from 'react-router-dom';
+import Card from './Card';
 
 const TitleCards = ({ title, category }) => {
   const cardListRef = useRef(null);
@@ -71,14 +71,10 @@ const TitleCards = ({ title, category }) => {
         </button>
         <div className="card-list" ref={cardListRef}>
           {apiData.map((card, index) => (
-            <Link to={`/player/${card.id}`} className="card" key={index}>
-              <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
-              <div className="card-overlay">
-                <h3>{card.original_title}</h3>
-                <p>Rating: {card.vote_average}</p>
-                <p>Release Date: {card.release_date}</p>
-              </div>
-            </Link>
+            <Card
+              key={index}
+              card={card}
+            />
           ))}
         </div>
         <button onClick={scrollRight} className='scroll-button-right'>
@@ -88,5 +84,7 @@ const TitleCards = ({ title, category }) => {
     </div>
   );
 };
+
+
 
 export default TitleCards;
