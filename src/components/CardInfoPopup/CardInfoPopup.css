@@ -19,9 +19,22 @@
     border-radius: 5px;
     border: 2px solid red;
     z-index: 999;
+    position: relative;
 }
 
 .popupBtn{
     background-color: white !important;
     color: black;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
+.popup-content img {
+    width: 100%;
+}
+.card-info-popup-image {
+    position: relative;
+}
+
+
+

@@ -18,9 +18,12 @@ const Card = ({ card }) => {
         </div>
         {isVisibleInfo && (
           <CardInfoPopup
+            id={card.id}
             title={card.original_title}
             rating={card.vote_average}
             release={card.release_date}
+            img={card.backdrop_path}
+            description={card.overview}
             handleClose={handleInfoClick}
           />
         )}
