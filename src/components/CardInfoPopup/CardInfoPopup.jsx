@@ -1,8 +1,25 @@
 import React, { useContext } from 'react';
 import './CardInfoPopup.css';
 import { useNavigate } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { UserContext } from '../../context/UserContext';
 
-const CardInfoPopup = ({ id,title, rating, release, handleClose, img, description }) => {
+const CardInfoPopup = ({ movieID,title, rating, release, handleClose, img, description }) => {
+
+  const { userID } = useContext(UserContext)
+
+  const addToList = async (id) => {
+    try {
+      await addDoc(collection(db,"mylist"), {
+        userID: userID,
+        movieID: movieID
+      })
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 
   const navigate = useNavigate();
   return (
@@ -12,7 +29,7 @@ const CardInfoPopup = ({ id,title, rating, release, handleClose, img, descriptio
         <div className='card-info-popup-image'>
           <img src={`https://image.tmdb.org/t/p/w500${img}`}></img>
           <button onClick={() => {navigate(`/player/${id}`)}}>PLAY</button>
-          <button>Add to list</button>
+          <button onClick={() => {addToList(movieID)}}>Add to list</button>
         </div>
         <h2 style={{ textAlign: "center" }}>{title}</h2>
         <p style={{ color: "lightgreen" }}>Rating: {rating}</p>

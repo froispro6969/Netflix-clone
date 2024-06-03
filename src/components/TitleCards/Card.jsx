@@ -18,7 +18,7 @@ const Card = ({ card }) => {
         </div>
         {isVisibleInfo && (
           <CardInfoPopup
-            id={card.id}
+            movieID={card.id}
             title={card.original_title}
             rating={card.vote_average}
             release={card.release_date}
