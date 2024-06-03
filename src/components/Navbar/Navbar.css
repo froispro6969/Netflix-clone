@@ -26,9 +26,11 @@
     gap: 20px;
 }
 
-.navbar-left ul li {
-    cursor: pointer;
+.navbar-link {
+    text-decoration: none;
+    color: white;
 }
+
 
 .navbar-right {
     display: flex;

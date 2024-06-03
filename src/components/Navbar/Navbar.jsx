@@ -8,6 +8,7 @@ import caret_icon from '../../assets/caret_icon.svg'
 import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext.jsx';
 import { signOut } from 'firebase/auth'
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -31,14 +32,14 @@ const Navbar = () => {
   return (
     <div ref={navRef} className='navbar'>
       <div className="navbar-left">
-        <img src={logo} alt="" />
+        <Link to={"/"}><img src={logo} alt="logo"/></Link>
         <ul>
-          <li>Home</li>
-          <li>TV Shows</li>
-          <li>Movies</li>
-          <li>New & Popular</li>
-          <li>My list</li>
-          <li>Browse by Languages</li>
+          <Link to={"/"} className='navbar-link'>Home</Link>
+          <Link className='navbar-link'>TV Shows</Link>
+          <Link className='navbar-link'>Movies</Link>
+          <Link className='navbar-link'>New & Popular</Link>
+          <Link to={"/mylist"} className='navbar-link'>My List</Link>
+          <Link className='navbar-link'>Browse by Languages</Link>
         </ul>
       </div>
       <div className="navbar-right">

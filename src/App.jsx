@@ -5,13 +5,12 @@ import Login from './pages/Login/Login.jsx'
 import Player from './pages/Player/Player'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Login/Register.jsx'
+import MyList from './pages/MyList/MyList.jsx'
 
 const App = () => {
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -32,6 +31,7 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/mylist' element={<MyList/>}/>
         <Route path='/player/:id' element={<Player/>}/>
       </Routes>
     </div>
