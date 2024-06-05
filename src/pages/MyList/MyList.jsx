@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import "./MyList.css"
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../firebase'
-import { UserContext } from '../../context/UserContext'
-import Card from '../../components/TitleCards/Card'
+import React, { useContext, useEffect, useState } from 'react';
+import Navbar from '../../components/Navbar/Navbar';
+import "./MyList.css";
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { UserContext } from '../../context/UserContext';
+import Card from '../../components/TitleCards/Card';
 
 const MyList = () => {
-
   const { userID } = useContext(UserContext);
   const [list, setList] = useState([]);
   const movieDoc = query(collection(db, "mylist"), where("userID", "==", userID));
-
 
   const options = {
     method: 'GET',
@@ -21,24 +19,31 @@ const MyList = () => {
     }
   };
 
-
   const getList = async () => {
-    const data = await getDocs(movieDoc);
-    const movieList = [];
+    try {
+      const data = await getDocs(movieDoc);
 
-    for (const doc of data.docs) {
-      const movieID = doc.data().movieID;
-      const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
-      const movieData = await movieResponse.json();
-      movieList.push({...movieData});
+      const moviePromises = data.docs.map(async (doc) => {
+        const movieID = doc.data().movieID;
+        const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
+        if (!movieResponse.ok) {
+          throw new Error('Failed to fetch movie data');
+        }
+        return movieResponse.json();
+      });
+
+      const movies = await Promise.all(moviePromises);
+      setList(movies);
+    } catch (error) {
+      console.error("Error fetching movie list:", error);
     }
-    setList(movieList);
-  }
+  };
 
   useEffect(() => {
-    getList();
-  }, [list]);
-
+    if (userID) {
+      getList();
+    }
+  }, [userID]);
 
   return (
     <div className='mylist'>
@@ -46,13 +51,12 @@ const MyList = () => {
       <div className="mylist-list">
         {list.map((movie, index) => (
           <div key={index}>
-              <Card card={movie} key={index}/>
+            <Card card={movie} />
           </div>
         ))}
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MyList
+export default MyList;
