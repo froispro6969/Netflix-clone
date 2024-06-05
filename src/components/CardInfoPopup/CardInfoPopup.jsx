@@ -8,7 +8,22 @@ import { UserContext } from '../../context/UserContext';
 const CardInfoPopup = ({ movieID, title, rating, release, handleClose, img, description }) => {
 
   const { userID } = useContext(UserContext)
- 
+  const [inList, setInList] = useState(false);
+
+
+  const checkInList = async (id) => {
+    try {
+      const q = query(collection(db,"mylist"), where("movieID", "==", id)); 
+      const snapshot = await getDocs(q);
+
+      const alreadyAdded = snapshot.docs.length > 0; 
+      setInList(alreadyAdded); 
+    } catch (err) {
+      console.error("Error checking movie in list:", err);
+    }
+  };
+
+
   const addToList = async (id) => {
     try {
       if (!inList) {
@@ -25,6 +40,23 @@ const CardInfoPopup = ({ movieID, title, rating, release, handleClose, img, desc
     }
   }
 
+  const removeFromList = async (id) => {
+    try {
+      const movieToDeleteQuery = query(collection(db, "mylist"), where("movieID", "==", id));
+      const movieToDeleteData = await getDocs(movieToDeleteQuery);
+      
+      const movieToDelete = doc(db, "mylist", movieToDeleteData.docs[0].id);
+      await deleteDoc(movieToDelete)
+      console.log("Successfully deleted movie");
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  useEffect(() => {
+     checkInList(movieID); 
+  }, [movieID]); 
 
   const navigate = useNavigate();
   return (
