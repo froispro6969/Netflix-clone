@@ -12,6 +12,24 @@
     object-fit: cover;
 }
 
+.mylist-spinner {
+    padding-top: 100px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mylist-error_page {
+    padding-top: 100px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 1200px) {
     .mylist-list {
         grid-template-columns: repeat(4, 1fr);

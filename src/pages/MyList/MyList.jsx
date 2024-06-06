@@ -5,11 +5,14 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { UserContext } from '../../context/UserContext';
 import Card from '../../components/TitleCards/Card';
+import netflix_spinner from '../../assets/netflix_spinner.gif'
 
 const MyList = () => {
   const { userID } = useContext(UserContext);
   const [list, setList] = useState([]);
   const movieDoc = query(collection(db, "mylist"), where("userID", "==", userID));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const options = {
     method: 'GET',
@@ -36,6 +39,9 @@ const MyList = () => {
       setList(movies);
     } catch (error) {
       console.error("Error fetching movie list:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -45,13 +51,33 @@ const MyList = () => {
     }
   }, [userID]);
 
+
+  if (loading) {
+    return <>
+      <Navbar />
+      <div className="mylist-spinner">
+        <img src={netflix_spinner} alt="" />
+      </div>;
+    </>
+  }
+
+  if (error) {
+    return <>
+      <Navbar />
+      <div className="mylist-error_page">
+        <p style={{color: "red"}}>{error}</p>
+      </div>;
+    </>
+  }
+
+
   return (
     <div className='mylist'>
       <Navbar />
       <div className="mylist-list">
         {list.map((movie, index) => (
           <div key={index}>
-            <Card card={movie} className={"mylist-card"}/>
+            <Card card={movie} className={"mylist-card"} />
           </div>
         ))}
       </div>
