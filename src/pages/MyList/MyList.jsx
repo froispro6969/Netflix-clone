@@ -51,7 +51,7 @@ const MyList = () => {
       <div className="mylist-list">
         {list.map((movie, index) => (
           <div key={index}>
-            <Card card={movie} />
+            <Card card={movie} className={"mylist-card"}/>
           </div>
         ))}
       </div>

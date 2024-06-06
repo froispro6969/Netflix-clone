@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import CardInfoPopup from '../CardInfoPopup/CardInfoPopup';
 
-const Card = ({ card }) => {
+const Card = ({ card, className }) => {
     const [isVisibleInfo, setIsVisibleInfo] = useState(false);
 
     const handleInfoClick = () => {
@@ -9,7 +9,7 @@ const Card = ({ card }) => {
     };
   
     return (
-      <div className="card" onClick={handleInfoClick}>
+      <div className={`card ${className}`} onClick={handleInfoClick}>
         <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
         <div className="card-overlay">
           <h3>{card.original_title}</h3>
