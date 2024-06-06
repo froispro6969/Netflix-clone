@@ -32,9 +32,9 @@ const Navbar = () => {
   return (
     <div ref={navRef} className='navbar'>
       <div className="navbar-left">
-        <Link to={"/"}><img src={logo} alt="logo"/></Link>
+        <Link to={"/"} onClick={() => setQuery("")}><img src={logo} alt="logo"/></Link>
         <ul>
-          <Link to={"/"} className='navbar-link'>Home</Link>
+          <Link to={"/"} onClick={() => setQuery("")} className='navbar-link'>Home</Link>
           <Link className='navbar-link'>TV Shows</Link>
           <Link className='navbar-link'>Movies</Link>
           <Link className='navbar-link'>New & Popular</Link>
@@ -46,7 +46,7 @@ const Navbar = () => {
         {IsVisible ?
           <div className="search-box">
             <input type="text" placeholder='Title of Movie' onChange={(e) => {setQuery(e.target.value)}}/>
-            <a className='close-input' onClick={() => {SetIsVisible(false)}}>X</a>
+            <a className='close-input' onClick={() => {SetIsVisible(false); setQuery("")}}>X</a>
           </div>
           :
           <img src={search_icon} alt="" className='icons' onClick={() => {SetIsVisible(true)}}/>}

@@ -10,6 +10,7 @@ import TitleCards from '../../components/TitleCards/TitleCards'
 import Footer from '../../components/Footer/Footer'
 import { SearchContext } from '../../context/SearchContext';
 import { Link } from 'react-router-dom';
+import Card from '../../components/TitleCards/Card'
 
 
 const Home = () => {
@@ -63,14 +64,10 @@ const Home = () => {
         <div className="searched-movies">
           <div className='searched-movie-list'>
             {apiData.map((card, index) => (
-              <Link to={`/player/${card.id}`} className="card" key={index}>
-                <img src={card.backdrop_path ? `https://image.tmdb.org/t/p/w500${card.backdrop_path}` : image_not_found} alt={card.original_title} />
-                <div className="card-overlay">
-                  <h3>{card.original_title}</h3>
-                  <p>Rating: {card.vote_average}</p>
-                  <p>Release Date: {card.release_date}</p>
-                </div>
-              </Link>
+              <Card 
+                key={index}
+                card={card}
+              />
             ))}
           </div>
         </div>
