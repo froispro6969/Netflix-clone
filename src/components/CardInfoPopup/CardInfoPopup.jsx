@@ -47,11 +47,15 @@ const CardInfoPopup = ({ movieID, title, rating, release, handleClose, img, desc
       
       const movieToDelete = doc(db, "mylist", movieToDeleteData.docs[0].id);
       await deleteDoc(movieToDelete)
-      console.log("Successfully deleted movie");
+      setInList(false);
     } catch (error) {
       console.log(error)
     }
   }
+
+  const handlePopupContentClick = (event) => {
+    event.stopPropagation();
+};
 
 
   useEffect(() => {
@@ -61,7 +65,7 @@ const CardInfoPopup = ({ movieID, title, rating, release, handleClose, img, desc
   const navigate = useNavigate();
   return (
     <div className="popup">
-      <div className="popup-content">
+      <div className="popup-content" onClick={handlePopupContentClick}>
         <button className="popupBtn" onClick={handleClose}>Close</button>
         <div className='card-info-popup-image'>
           <img src={`https://image.tmdb.org/t/p/w500${img}`}></img>
