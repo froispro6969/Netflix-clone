@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import "./MyList.css";
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { UserContext } from '../../context/UserContext';
 import Card from '../../components/TitleCards/Card';
@@ -10,7 +10,6 @@ import netflix_spinner from '../../assets/netflix_spinner.gif'
 const MyList = () => {
   const { userID } = useContext(UserContext);
   const [list, setList] = useState([]);
-  const movieDoc = query(collection(db, "mylist"), where("userID", "==", userID));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,54 +21,58 @@ const MyList = () => {
     }
   };
 
-  const getList = async () => {
-    try {
-      const data = await getDocs(movieDoc);
-
-      const moviePromises = data.docs.map(async (doc) => {
-        const movieID = doc.data().movieID;
-        const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
-        if (!movieResponse.ok) {
-          throw new Error('Failed to fetch movie data');
-        }
-        return movieResponse.json();
-      });
-
-      const movies = await Promise.all(moviePromises);
-      setList(movies);
-    } catch (error) {
-      console.error("Error fetching movie list:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false)
-    }
-  };
-
   useEffect(() => {
-    if (userID) {
-      getList();
-    }
+    if (!userID) return;
+
+    const movieDoc = query(collection(db, "mylist"), where("userID", "==", userID));
+
+    const unsubscribe = onSnapshot(movieDoc, async (snapshot) => {
+      setLoading(true);
+      try {
+        const moviePromises = snapshot.docs.map(async (doc) => {
+          const movieID = doc.data().movieID;
+          const movieResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieID}?language=en-US`, options);
+          if (!movieResponse.ok) {
+            throw new Error('Failed to fetch movie data');
+          }
+          return movieResponse.json();
+        });
+
+        const movies = await Promise.all(moviePromises);
+        setList(movies);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching movie list:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
   }, [userID]);
 
-
   if (loading) {
-    return <>
-      <Navbar />
-      <div className="mylist-spinner">
-        <img src={netflix_spinner} alt="" />
-      </div>;
-    </>
+    return (
+      <>
+        <Navbar />
+        <div className="mylist-spinner">
+          <img src={netflix_spinner} alt="" />
+        </div>
+      </>
+    );
   }
 
   if (error) {
-    return <>
-      <Navbar />
-      <div className="mylist-error_page">
-        <p style={{color: "red"}}>{error}</p>
-      </div>;
-    </>
+    return (
+      <>
+        <Navbar />
+        <div className="mylist-error_page">
+          <p style={{color: "red"}}>{error}</p>
+        </div>
+      </>
+    );
   }
-
 
   return (
     <div className='mylist'>
