@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './TitleCards.css';
-import play_icon from '../../assets/play_icon.png';
+import arrow_right from '../../assets/arrow_right.png'
 import Card from './Card';
 
 const TitleCards = ({ title, category }) => {
@@ -67,7 +67,7 @@ const TitleCards = ({ title, category }) => {
       <h2>{title ? title : "Popular on Netflix"}</h2>
       <div className="card-list-wrapper" ref={titleCardsRef}>
         <button onClick={scrollLeft} className='scroll-button-left' ref={leftButtonRef}>
-          <img src={play_icon} className='more-cards-icon' alt="Scroll" />
+          <img src={arrow_right} className='more-cards-icon' alt="Scroll" />
         </button>
         <div className="card-list" ref={cardListRef}>
           {apiData.map((card, index) => (
@@ -78,7 +78,7 @@ const TitleCards = ({ title, category }) => {
           ))}
         </div>
         <button onClick={scrollRight} className='scroll-button-right'>
-          <img src={play_icon} className='more-cards-icon' alt="Scroll" />
+          <img src={arrow_right} className='more-cards-icon' alt="Scroll" />
         </button>
       </div>
     </div>

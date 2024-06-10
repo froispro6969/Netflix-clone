@@ -83,13 +83,7 @@
 .more-cards-icon {
     height: 40px;
     width: 40px;
-}
-
-.add-mylist {
-    position: absolute;
-    right: 0;
-    top: -25px;
-    z-index: 2;
+    filter: invert(1);
 }
 
 
@@ -110,6 +104,10 @@
     }
     .card-overlay {
         font-size: 12px;
+    }
+    .more-cards-icon {
+        height: 20px;
+        width: 20px;
     }
 }
 

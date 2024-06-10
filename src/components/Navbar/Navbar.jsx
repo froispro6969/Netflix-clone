@@ -5,6 +5,7 @@ import search_icon from '../../assets/search_icon.svg'
 import bell_icon from '../../assets/bell_icon.svg'
 import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
+import hamburger from '../../assets/hamburger.png'
 import { useNavigate } from 'react-router-dom'
 import { SearchContext } from '../../context/SearchContext.jsx';
 import { signOut } from 'firebase/auth'
@@ -32,7 +33,8 @@ const Navbar = () => {
   return (
     <div ref={navRef} className='navbar'>
       <div className="navbar-left">
-        <Link to={"/"} onClick={() => setQuery("")}><img src={logo} alt="logo"/></Link>
+        <img src={hamburger} alt="" className='icons hamburger-icon'/>
+        <Link to={"/"} onClick={() => setQuery("")}><img src={logo} alt="logo" className='netflix-logo'/></Link>
         <ul>
           <Link to={"/"} onClick={() => setQuery("")} className='navbar-link'>Home</Link>
           <Link className='navbar-link'>TV Shows</Link>
@@ -49,8 +51,11 @@ const Navbar = () => {
             <a className='close-input' onClick={() => {SetIsVisible(false); setQuery("")}}>X</a>
           </div>
           :
-          <img src={search_icon} alt="" className='icons' onClick={() => {SetIsVisible(true)}}/>}
-        <p>Children</p>
+          <>
+          <img src={search_icon} alt="" className='icons search-icon' onClick={() => {SetIsVisible(true);navigate("/")}}/>
+          </>
+          }
+        <p className='children-icon'>Children</p>
         <img src={bell_icon} alt="" className='icons' />
         <div className="navbar-profile">
           <img src={profile_img} alt="" className='profile' />
