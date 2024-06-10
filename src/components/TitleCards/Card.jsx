@@ -10,7 +10,7 @@ const Card = ({ card, className }) => {
   
     return (
       <div className={`card ${className}`} onClick={handleInfoClick}>
-        <img src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
+        <img className='card-image' src={`https://image.tmdb.org/t/p/w500${card.backdrop_path}`} alt={card.original_title} />
         <div className="card-overlay">
           <h3>{card.original_title}</h3>
           <p>Rating: {card.vote_average}</p>
