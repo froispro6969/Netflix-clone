@@ -28,11 +28,14 @@
 
 .card-list img {
     border-radius: 4px;
-    cursor: pointer;
 }
 
 .card {
     position: relative;
+}
+
+.card img {
+    width: 260px;
 }
 
 .card-overlay {
@@ -55,9 +58,6 @@
     opacity: 1;
 }
 
-.card img {
-    width: 260px;
-}
 
 .scroll-button-right,
 .scroll-button-left {

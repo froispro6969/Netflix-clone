@@ -21,19 +21,59 @@
     position: relative;
 }
 
-.popupBtn{
-    background-color: white !important;
-    color: black;
+.popupBtn {
     position: absolute;
-    right: 0;
-    top: 0;
-  }
+    right: 5px;
+    top: 5px;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.close_icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
 .popup-content img {
     width: 100%;
 }
+
 .card-info-popup-image {
     position: relative;
 }
 
+.btn {
+    border: 0;
+    outline: 0;
+    padding: 5px 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    background:white;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+.btn img {
+    width: 25px;
+}
 
+.list-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.list-icons {
+    background: transparent;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.list-btn {
+    margin-left: 10px;
+    padding: 1px 0;
+    cursor: pointer;
+}
