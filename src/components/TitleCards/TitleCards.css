@@ -86,7 +86,7 @@
     filter: invert(1);
 }
 
-
+/* Responsive styles */
 
 @media (max-width: 768px) {
     .title-cards {

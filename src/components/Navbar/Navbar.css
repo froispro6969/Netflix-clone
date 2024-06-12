@@ -183,6 +183,7 @@
     padding: 10px 0;
   }
 
+/* Responsive styles */
 
 @media (max-width: 1050px) {
     .navbar {
