@@ -20,16 +20,31 @@ const Navbar = () => {
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
+  const handleScroll = () => {
+    if (navRef.current) {
       if (window.scrollY >= 80) {
-        navRef.current.classList.add('nav-dark')
+        navRef.current.classList.add('nav-dark');
+      } else {
+        navRef.current.classList.remove('nav-dark');
       }
-      else {
-        navRef.current.classList.remove('nav-dark')
-      }
-    })
-  }, [])
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    if (menuVisible) {
+      navRef.current.style.backgroundColor = "#141414";
+    } else {
+      navRef.current.style.backgroundColor = "";
+    }
+  }, [menuVisible])
 
   return (
     <>
